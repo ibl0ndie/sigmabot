@@ -176,15 +176,15 @@ async def process_trial(message: types.Message):
 # --- 🚀 WEBHOOK SERVER (REQUIRED FOR RENDER) ---
 
 async def on_startup(bot: Bot):
+    # ✅ FIX: Start Scheduler HERE (inside the event loop)
+    scheduler.start()
+
     # Set the webhook when the app starts
     if WEB_SERVER_URL:
         await bot.set_webhook(f"{WEB_SERVER_URL}{WEBHOOK_PATH}")
         logging.info(f"Webhook set to {WEB_SERVER_URL}{WEBHOOK_PATH}")
 
 def main():
-    # Start Scheduler
-    scheduler.start()
-
     # Webhook Setup
     dp.startup.register(on_startup)
     
